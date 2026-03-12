@@ -35,14 +35,14 @@ pipeline {
                     if (isUnix()) {
 
                         sh """
-                        docker compose -f grid.yml up -d \
+                        docker compose -f grid.yaml up -d \
                         --scale ${params.BROWSER}=${params.BROWSER_SCALE}
                         """
 
                     } else {
 
                         bat """
-                        docker compose -f grid.yml up -d ^
+                        docker compose -f grid.yaml up -d ^
                         --scale %BROWSER%=%BROWSER_SCALE%
                         """
 
@@ -67,7 +67,7 @@ pipeline {
 
                             sh """
                             docker compose \
-                            -f test-suites.yml \
+                            -f test-suites.yaml \
                             up --abort-on-container-exit
                             """
 
@@ -75,7 +75,7 @@ pipeline {
 
                             bat """
                             docker compose ^
-                            -f test-suites.yml ^
+                            -f test-suites.yaml ^
                             up --abort-on-container-exit
                             """
 
@@ -105,16 +105,16 @@ pipeline {
                 // Stop containers
                 if (isUnix()) {
 
-                    sh "docker compose -f grid.yml down || true"
-                    sh "docker compose -f test-suites.yml down || true"
+                    sh "docker compose -f grid.yaml down || true"
+                    sh "docker compose -f test-suites.yaml down || true"
 
                     // Delete pulled test image
                     sh "docker rmi ${TEST_IMAGE} || true"
 
                 } else {
 
-                    bat "docker compose -f grid.yml down || exit 0"
-                    bat "docker compose -f test-suites.yml down || exit 0"
+                    bat "docker compose -f grid.yaml down || exit 0"
+                    bat "docker compose -f test-suites.yaml down || exit 0"
 
                     // Delete pulled test image
                     bat "docker rmi %TEST_IMAGE% || exit 0"
