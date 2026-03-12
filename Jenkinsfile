@@ -129,11 +129,15 @@ pipeline {
                 // --------------------------
             // Publish Extent Report HTML
             // --------------------------
+            // Dynamic TestNG failure detection
+            def suiteName = params.TEST_SUITE.replace('.xml','')
+            def reportFile = "output/${suiteName}
+
             publishHTML([
                 allowMissing: false,
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
-                reportDir: 'output',                   // folder containing your HTML report
+                reportDir: reportFile,                   // folder containing your HTML report
                 reportFiles: 'ExtentReport.html',     // exact report file name
                 reportName: 'Automation Test Report'   // this shows as a clickable tab in Jenkins
         ])                 
