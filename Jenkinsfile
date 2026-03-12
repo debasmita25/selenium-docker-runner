@@ -121,10 +121,22 @@ pipeline {
                 }
 
             }
-
+             // Archive artifacts (existing)
             archiveArtifacts artifacts: 'output/**/*',
                              fingerprint: true,
                              followSymlinks: false
+
+                // --------------------------
+            // Publish Extent Report HTML
+            // --------------------------
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'output',                   // folder containing your HTML report
+                reportFiles: 'ExtentReport.html',     // exact report file name
+                reportName: 'Automation Test Report'   // this shows as a clickable tab in Jenkins
+        ])                 
         }
     }
 
