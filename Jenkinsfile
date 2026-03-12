@@ -95,53 +95,36 @@ pipeline {
         }
 
     }
-
-    post {
-
-        always {
-
-            script {
-
-                // Stop containers
-                if (isUnix()) {
-
-                    sh "docker compose -f grid.yaml down || true"
-                    sh "docker compose -f test-suites.yaml down || true"
-
-                    // Delete pulled test image
-                    sh "docker rmi ${TEST_IMAGE} || true"
-
-                } else {
-
-                    bat "docker compose -f grid.yaml down || exit 0"
-                    bat "docker compose -f test-suites.yaml down || exit 0"
-
-                    // Delete pulled test image
-                    bat "docker rmi %TEST_IMAGE% || exit 0"
-                }
-
+post {
+    always {
+        script {
+            if (isUnix()) {
+                sh "docker compose -f grid.yaml down || true"
+                sh "docker compose -f test-suites.yaml down || true"
+                sh "docker rmi ${TEST_IMAGE} || true"
+            } else {
+                bat "docker compose -f grid.yaml down || exit 0"
+                bat "docker compose -f test-suites.yaml down || exit 0"
+                bat "docker rmi %TEST_IMAGE% || exit 0"
             }
-             // Archive artifacts (existing)
-            archiveArtifacts artifacts: 'output/**/*',
-                             fingerprint: true,
-                             followSymlinks: false
 
-                // --------------------------
-            // Publish Extent Report HTML
-            // --------------------------
-            // Dynamic TestNG failure detection
-            def suiteName = params.TEST_SUITE.replace('.xml','')
+            def suiteName = params.TEST_SUITE.replace('.xml', '')
             def reportFile = "output/${suiteName}"
 
             publishHTML([
                 allowMissing: true,
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
-                reportDir: reportFile,                   // folder containing your HTML report
-                reportFiles: 'ExtentReport.html',     // exact report file name
-                reportName: 'Automation Test Report'   // this shows as a clickable tab in Jenkins
-        ])                 
+                reportDir: reportFile,
+                reportFiles: 'ExtentReport.html',
+                reportName: 'Automation Test Report'
+            ])
         }
+
+        archiveArtifacts artifacts: 'output/**/*',
+                         fingerprint: true,
+                         followSymlinks: false
     }
+}
 
 }
