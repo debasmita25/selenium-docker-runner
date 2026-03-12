@@ -131,10 +131,10 @@ pipeline {
             // --------------------------
             // Dynamic TestNG failure detection
             def suiteName = params.TEST_SUITE.replace('.xml','')
-            def reportFile = "output/${suiteName}
+            def reportFile = "output/${suiteName}"
 
             publishHTML([
-                allowMissing: false,
+                allowMissing: true,
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
                 reportDir: reportFile,                   // folder containing your HTML report
