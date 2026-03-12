@@ -109,7 +109,7 @@ post {
             }
 
             def suiteName = params.TEST_SUITE.replace('.xml', '')
-            def reportFile = "output/${suiteName}"
+            def reportFile = "output/results"
 
             publishHTML([
                 allowMissing: true,
@@ -121,7 +121,7 @@ post {
             ])
         }
 
-        archiveArtifacts artifacts: 'output/**/*',
+        archiveArtifacts artifacts: 'output/results/ExtentReport.html',
                          fingerprint: true,
                          followSymlinks: false
     }

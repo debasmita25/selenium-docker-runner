@@ -8,9 +8,10 @@ services:
     - THREAD_COUNT
     - TEST_SUITE
     - TEST_ENV
+    
     volumes:
-    - ./output/${BROWSER}/${TEST_SUITE}/results:/home/selenium-docker/test-output
-    - ./output/${BROWSER}/${TEST_SUITE}/container-logs:/home/selenium-docker/logs
+    - ./output/results:/home/selenium-docker/test-output
+    - ./output/container-logs:/home/selenium-docker/logs
 
   # flight-reservation:
   #   image: debasmita25/selenium-tests-grid:1.0.8
