@@ -1,0 +1,46 @@
+version: "5"
+services:
+  tests:
+    image: debasmita25/selenium-tests
+    environment:
+    - BROWSER
+    - HUB_HOST=hub
+    - THREAD_COUNT
+    - TEST_SUITE
+    - TEST_ENV
+    volumes:
+    - ./output/${BROWSER}/${TEST_SUITE}/results:/home/selenium-docker/test-output
+    - ./output/${BROWSER}/${TEST_SUITE}/container-logs:/home/selenium-docker/logs
+
+  # flight-reservation:
+  #   image: debasmita25/selenium-tests-grid:1.0.8
+  #   environment:
+  #   - BROWSER=${BROWSER}
+  #   - HUB_HOST=hub
+  #   - THREAD_COUNT=3
+  #   - TEST_SUITE=flight-reservation.xml
+  #   - TEST_ENV=qa
+  #   volumes:
+  #   - ./output/${BROWSER}/flight-reservation/results:/home/selenium-docker/test-output
+  #   - ./output/${BROWSER}/flight-reservation/container-logs:/home/selenium-docker/logs
+
+
+
+  # flight-reservation:
+  #   image: debasmita25/selenium-tests-grid:1.0.2
+  #   depends_on:
+  #   - firefox
+  #   environment:
+  #   - BROWSER=firefox
+  #   - HUB_HOST=hub
+  #   - THREAD_COUNT=2
+  #   - TEST_SUITE=flight-reservation.xml
+  #   volumes:
+  #   - G:\eclipse-workspace\webdocker\output\flight-reservation\results:/home/selenium-docker/test-output
+  #   - G:\eclipse-workspace\webdocker\output\flight-reservation\container-logs:/home/selenium-docker/logs
+     
+
+    
+    
+    
+
